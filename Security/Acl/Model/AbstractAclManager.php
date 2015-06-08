@@ -325,6 +325,10 @@ abstract class AbstractAclManager implements AclManagerInterface
         $size = count($aces) - 1;
         reset($aces);
 
+        if(!is_object($acl)) {
+            return;
+        }
+
         for ($i = $size; $i >= 0; $i--) {
             if ($securityIdentity->equals($aces[$i]->getSecurityIdentity())) {
                 $this->removeMask($i, $acl, $aces[$i], $mask, $type);
