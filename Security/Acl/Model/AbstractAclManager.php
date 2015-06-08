@@ -320,14 +320,13 @@ abstract class AbstractAclManager implements AclManagerInterface
         $securityIdentity = $this->createSecurityIdentity($identity);
 
         $acl  = $this->getAclFor($object, false);
+        
+        if (null === $acl) return;
+        
         $aces = $type == 'object' ? $acl->getObjectAces() : $acl->getClassAces();
 
         $size = count($aces) - 1;
         reset($aces);
-
-        if(!is_object($acl)) {
-            return;
-        }
 
         for ($i = $size; $i >= 0; $i--) {
             if ($securityIdentity->equals($aces[$i]->getSecurityIdentity())) {
